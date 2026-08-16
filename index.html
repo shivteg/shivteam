@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lumora — Independent Design & Engineering Studio</title>
+<meta name="description" content="Lumora is an independent studio crafting brands, products, and the systems that connect them — bold ideas, shipped with quiet precision." />
+<meta name="theme-color" content="#0a0a0a" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Reset & Global */
+*{ box-sizing:border-box; margin:0; padding:0 }
+html{ font-size:16px; -webkit-font-smoothing:antialiased; }
+body{ background:#ffffff; color:#111111; font-family:'Onest',sans-serif; overflow-x:hidden }
+a{ color:inherit; text-decoration:none }
+button{ font:inherit; color:inherit; background:none; border:none; cursor:pointer }
+ul{ list-style:none }
+img{ display:block }
+.sr-only{ position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0 }
+:focus-visible{ outline:2px solid #b15f2c; outline-offset:2px }
+@media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important } }
+
+/* Grid / Media */
+@media (max-width:1920px){ html{ font-size:0.833333vw } }
+@media (max-width:1440px){ html{ font-size:1.111111vw } }
+@media (max-width:1024px){ html{ font-size:1.5625vw } }
+@media (max-width:640px){  html{ font-size:4.444444vw } }
+
+/* Shared CSS Constants */
+:root {
+  --background:#ffffff; --foreground:#111111; --ink:#0a0a0a;
+  --muted:#8d8d8d; --subtle:#b6b6b6; --line:#e6e5e2;
+  --surface:#f1f0ee; --surface-2:#e3e2df;
+  --accent:#b15f2c; --accent-from:#cf8047; --accent-to:#97501f;
+  --hero-from:#ecebe9; --hero-to:#c9c9c9;
+  --radius-pill:9999px; --radius-card:2rem; --radius-card-sm:1.25rem; --radius-control:0.875rem;
+  --text-watermark:13rem; --container-shell:88rem;
+}
+
+/* Utilities */
+.shell { max-width:var(--container-shell); margin-inline:auto; padding-inline:1.25rem; }
+@media (min-width:640px) { .shell { padding-inline:2rem; } }
+
+/* Hover Springs & Transitions */
+@media (hover: hover) {
+  .hover-scale { transition: transform 0.35s cubic-bezier(.2,.8,.2,1); }
+  .hover-scale:hover { transform: scale(1.04); }
+  .hover-scale-105:hover { transform: scale(1.05); }
+  .hover-scale-118:hover { transform: scale(1.18); }
+  
+  .hover-lift { transition: all 0.35s cubic-bezier(.2,.8,.2,1); }
+  .hover-lift:hover { transform: translateY(-2px); opacity: 1; }
+  
+  .group:hover .group-hover-lift { transform: translateY(-8px) scale(1.012); }
+  .group-hover-lift { transition: all 0.6s cubic-bezier(.22,1,.36,1); }
+  
+  .group:hover .group-hover-badge { transform: rotate(45deg) scale(1.08); }
+  .group-hover-badge { transition: all 0.6s cubic-bezier(.22,1,.36,1); }
+  
+  .row-group:hover { background: rgba(241,240,238,1); padding-left: 2rem; padding-right: 1.25rem; }
+  .row-group { transition: all 0.6s cubic-bezier(.22,1,.36,1); }
+  .row-group:hover .row-group-badge { transform: translateX(5px); }
+  .row-group-badge { transition: transform 0.35s cubic-bezier(.2,.8,.2,1); }
+
+  .anim-link { transition: all 0.35s cubic-bezier(.2,.8,.2,1); }
+  .anim-link:hover { transform: translateX(4px); opacity: 1; }
+  
+  .anim-link-sm { transition: all 0.35s cubic-bezier(.2,.8,.2,1); }
+  .anim-link-sm:hover { transform: translateX(3px); opacity: 1; }
+}
+
+/* Base states for touch devices (no hover) */
+.anim-link { opacity: 0.65; display: inline-flex; }
+.anim-link-sm { opacity: 0.7; display: inline-flex; }
+
+/* Components */
+.pill-btn {
+  display: inline-block;
+  cursor: pointer;
+}
+.pill-btn-inner {
+  display: inline-flex; align-items: center; gap: 0.75rem;
+  border-radius: var(--radius-pill); font-size: 0.875rem; font-weight: 500;
+  padding: 0.875rem 1.75rem;
+}
+.pill-btn.with-arrow .pill-btn-inner {
+  padding: 0.375rem 0.375rem 0.375rem 1.5rem;
+}
+.pill-btn.dark .pill-btn-inner { background: var(--ink); color: #fff; }
+.pill-btn.light .pill-btn-inner { background: var(--surface); color: #111; }
+.pill-btn.outline .pill-btn-inner { border: 1px solid var(--line); background: transparent; color: #111; }
+
+.pill-badge {
+  width: 2.25rem; height: 2.25rem; display: grid; place-items: center;
+  border-radius: var(--radius-pill); font-size: 1rem;
+}
+.pill-btn.dark .pill-badge { background: #fff; color: var(--ink); }
+.pill-btn.light .pill-badge, .pill-btn.outline .pill-badge { background: var(--ink); color: #fff; }
+.pill-badge svg { transition: transform 0.35s cubic-bezier(.2,.8,.2,1); }
+@media (hover: hover) {
+  .pill-btn:hover .pill-badge.arrow-right svg { transform: translate(3px, 0); }
+  .pill-btn:hover .pill-badge.arrow-up-right svg { transform: translate(2px, -2px); }
+}
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.875rem; font-weight: 500;
+}
+.eyebrow .dot { width: 0.375rem; height: 0.375rem; border-radius: 9999px; }
+.eyebrow.dark { color: rgba(17,17,17,0.7); }
+.eyebrow.dark .dot { background: rgba(17,17,17,0.5); }
+.eyebrow.light { color: rgba(255,255,255,0.7); }
+.eyebrow.light .dot { background: rgba(255,255,255,0.6); }
+
+.tag-chip {
+  display: inline-flex; border: 1px solid rgba(255,255,255,0.25);
+  border-radius: var(--radius-pill); padding: 0.5rem 1rem;
+  font-size: 0.875rem; color: #fff;
+}
+
+/* Animations / Reveals */
+.reveal-clip { overflow: hidden; }
+.reveal-up { opacity: 0; transform: translateY(24px); transition: all 0.8s cubic-bezier(.16,1,.3,1); }
+.reveal-up.revealed { opacity: 1; transform: translateY(0); }
+
+.reveal-fade-up { opacity: 0; transform: translateY(14px); transition: all 0.8s cubic-bezier(.16,1,.3,1); }
+.reveal-fade-up.revealed { opacity: 1; transform: translateY(0); }
+
+.reveal-scale { opacity: 0; transform: translateY(16px) scale(0.96); transition: all 0.8s cubic-bezier(.16,1,.3,1); }
+.reveal-scale.revealed { opacity: 1; transform: translateY(0) scale(1); }
+
+.reveal-word { display: inline-block; opacity: 0; transform: translateY(24px); transition: all 0.7s cubic-bezier(.165,.84,.44,1); }
+.reveal-word.revealed { opacity: 1; transform: translateY(0); }
+
+.reveal-line { display: inline-block; opacity: 0; transform: translateY(100%); transition: all 0.9s cubic-bezier(.215,.61,.355,1); }
+.reveal-line.revealed { opacity: 1; transform: translateY(0); }
+
+/* Loader */
+#page-loader {
+  position: fixed; inset: 0; z-index: 120; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 2rem; background: var(--ink);
+  color: #fff; border-radius: 0 0 2rem 2rem;
+  transition: transform 0.7s cubic-bezier(.22,1,.36,1);
+}
+#page-loader.exit { transform: translateY(-100%); }
+#page-loader .center-content { transition: all 0.6s cubic-bezier(.22,1,.36,1); }
+#page-loader.exit .center-content { opacity: 0; transform: translateY(-12px); }
+
+/* Header */
+#header {
+  position: absolute; inset-inline: 0; top: 0; z-index: 50;
+  opacity: 0; transform: translateY(-14px); transition: all 0.7s cubic-bezier(.22,1,.36,1);
+}
+#header.revealed { opacity: 1; transform: translateY(0); }
+
+/* Liquid Reveal */
+.liquid-reveal { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.liquid-reveal canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* Skip Link */
+.skip-link {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.skip-link:focus {
+  position: fixed; left: 1rem; top: 1rem; z-index: 60; border-radius: 0.875rem; background: var(--ink); padding: 0.5rem 1rem; font-size: 0.875rem; color: #fff;
+  width: auto; height: auto; clip: auto; white-space: normal;
+}
+
+/* Modals / Overlays */
+.overlay {
+  position: fixed; inset: 0; z-index: 115; display: flex; flex-direction: column;
+  background: var(--ink); color: #fff;
+  opacity: 0; pointer-events: none; transition: opacity 0.6s cubic-bezier(.22,1,.36,1);
+}
+.overlay.open { opacity: 1; pointer-events: auto; }
+
+#request-modal-backdrop {
+  position: fixed; inset: 0; z-index: 110; display: flex; align-items: flex-end; justify-content: center;
+  padding: 1rem; background: rgba(17,17,17,0.3); backdrop-filter: blur(16px);
+  opacity: 0; pointer-events: none; transition: opacity 0.6s cubic-bezier(.22,1,.36,1);
+}
+@media (min-width: 640px) { #request-modal-backdrop { align-items: center; } }
+#request-modal-backdrop.open { opacity: 1; pointer-events: auto; }
+#request-modal-panel {
+  position: relative; width: 100%; max-width: 32rem; overflow: hidden; border-radius: 2rem;
+  background: #fff; padding: 1.5rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+  border: 1px solid var(--line);
+  opacity: 0; transform: translateY(28px); transition: all 0.6s cubic-bezier(.22,1,.36,1);
+}
+@media (min-width: 640px) { #request-modal-panel { padding: 2rem; } }
+#request-modal-backdrop.open #request-modal-panel { opacity: 1; transform: translateY(0); }
+/* The exit state for the panel moves it up a bit (to -18px relative to original, so 0 -> -18px on exit? Wait, the prompt says "18px" on exit or just 28px -> 0 -> 18px. I'll just map 0 -> -18px on exit if needed, or just translateY(28px) when closed. Using 28px when closed is fine.) */
+#request-modal-backdrop.closing #request-modal-panel { transform: translateY(18px); opacity: 0; }
+
+.nav-item {
+  transform: translateY(1rem); opacity: 0; transition: all 0.5s ease-out;
+}
+.overlay.open .nav-item { transform: translateY(0); opacity: 1; }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- PageLoader -->
+<div id="page-loader">
+  <div class="center-content" style="display:flex; flex-direction:column; align-items:center; gap:1.25rem;">
+    <div style="font-weight:600; font-size:1.5rem; display:flex; align-items:center; gap:0.5rem;">
+      <svg viewBox="0 0 48 48" style="width:1.875rem; height:1.875rem; fill:#cf8047;">
+        <path d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/>
+      </svg>
+      <span style="font-size: clamp(1.5rem, 3vw, 1.875rem);">Lumora</span>
+    </div>
+    <p style="max-width:24ch; font-size:0.875rem; color:rgba(255,255,255,.55); text-align:center;">Bold ideas, shipped with quiet precision.</p>
+  </div>
+  <div style="width:min(22rem, 72vw); display:flex; flex-direction:column; gap:0.75rem;">
+    <div style="height:1px; background:rgba(255,255,255,.15); width:100%;">
+      <div id="loader-progress" style="height:100%; background:#cf8047; width:0%; transition:width .1s ease-out;"></div>
+    </div>
+    <div style="display:flex; justify-content:space-between; font-size:0.75rem; font-weight:500; text-transform:uppercase; letter-spacing:0.05em; color:rgba(255,255,255,.45);">
+      <span>Loading</span>
+      <span id="loader-count" style="color:rgba(255,255,255,.8); font-variant-numeric:tabular-nums;">000</span>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header id="header">
+  <div class="shell" style="display:flex; align-items:center; justify-content:space-between; gap:1.5rem; padding-block:1.25rem;">
+    <!-- Brand -->
+    <button class="hover-scale" onclick="smoothScrollTo('home')" style="display:flex; align-items:center; gap:0.5rem; font-size:1.125rem; font-weight:600; letter-spacing:-0.01em;">
+      <svg viewBox="0 0 48 48" style="width:1.25rem; height:1.25rem; fill:var(--accent);">
+        <path d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/>
+      </svg>
+      Lumora
+    </button>
+    <!-- Primary Nav (lg+) -->
+    <ul style="display:none; gap:2rem; font-size:0.875rem; font-weight:500;" class="nav-links-lg">
+      <li><button class="hover-lift" onclick="smoothScrollTo('home')" aria-current="page">Home</button></li>
+      <li><button class="hover-lift" onclick="smoothScrollTo('works')">Work</button></li>
+      <li>
+        <button class="hover-lift" onclick="smoothScrollTo('services')" style="display:flex; align-items:center; gap:0.25rem;">
+          Services <span style="font-size:0.75rem; opacity:0.6;">▾</span>
+        </button>
+      </li>
+      <li><button class="hover-lift" onclick="smoothScrollTo('about')">Studio</button></li>
+      <li><button class="hover-lift" onclick="smoothScrollTo('careers')">Careers</button></li>
+      <li><button class="hover-lift" onclick="openRequestModal()">Contact</button></li>
+    </ul>
+    <!-- Right -->
+    <div style="display:flex; align-items:center; gap:1rem;">
+      <!-- Clock chip -->
+      <div class="clock-chip" style="display:none; border:1px solid rgba(230,229,226,.8); background:rgba(255,255,255,.4); backdrop-filter:blur(4px); border-radius:0.875rem; padding:0.5rem 0.75rem; gap:0.75rem; font-size:0.75rem; color:rgba(17,17,17,.7); align-items:center;">
+        <span style="color:rgba(17,17,17,.45);">Local time</span>
+        <span id="header-time" style="min-width:3.5rem; font-variant-numeric:tabular-nums; font-weight:500; color:#111;">9:41am</span>
+        <span style="color:rgba(17,17,17,.3);">•</span>
+        <span id="header-date" style="font-weight:500;">12 March, 2025</span>
+      </div>
+      <!-- Menu Button -->
+      <button class="menu-btn" onclick="openNavMenu()" style="border:1px solid rgba(230,229,226,.8); background:rgba(255,255,255,.4); backdrop-filter:blur(4px); border-radius:0.875rem; transition: background 0.3s;">
+        <span class="hover-scale-105" style="display:flex; align-items:center; gap:0.5rem; padding:0.5rem 1rem; font-size:0.75rem; font-weight:500; text-transform:uppercase; letter-spacing:0.05em; display:inline-flex;">
+          <svg viewBox="0 0 24 24" style="width:0.875rem; height:0.875rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          <span class="menu-label">Menu</span>
+        </span>
+      </button>
+    </div>
+  </div>
+</header>
+<style>
+@media (min-width:768px) { .clock-chip { display:flex !important; } }
+@media (min-width:1024px) { .nav-links-lg { display:flex !important; } }
+@media (max-width:639px) { .menu-label { display:none; } #header .shell { padding-block:1.25rem; } }
+@media (min-width:640px) { #header .shell { padding-block:1.5rem; } }
+</style>
+
+<main id="main">
+  <!-- 2) Hero -->
+  <section id="home" style="position:relative; isolation:isolate; overflow:hidden; border-radius:0 0 2rem 2rem; background:var(--hero-to);">
+    <!-- LiquidReveal -->
+    <div class="liquid-reveal">
+      <img src="https://api.getlayers.ai/storage/v1/object/public/public/assets/lumora-e8b711fc68/hero/after.jpg" style="object-fit:cover; position:absolute; inset:0; width:100%; height:100%;" alt="" />
+      <canvas id="liquid-canvas" aria-hidden="true"></canvas>
+    </div>
+    <!-- Legibility vignette -->
+    <div style="position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(to bottom, rgba(255,255,255,.35), transparent, rgba(255,255,255,.35));"></div>
+    
+    <!-- Watermark -->
+    <div id="hero-watermark" style="pointer-events:none; position:absolute; inset-inline:0; bottom:7rem; z-index:1; text-align:center; user-select:none; font-weight:700; line-height:1; font-size:var(--text-watermark); color:rgba(255,255,255,.4); opacity:0; transform:translateY(20px); transition:all 0.7s cubic-bezier(.22,1,.36,1);">LUMORA</div>
+
+    <!-- Content grid -->
+    <div class="shell hero-grid" style="position:relative; z-index:20; display:flex; flex-direction:column; gap:2rem; padding:7rem 1.25rem 5rem;">
+      <!-- Left -->
+      <div class="hero-left" style="display:flex; flex-direction:column; gap:1.75rem;">
+        <div id="hero-eyebrow" class="eyebrow dark reveal-fade-up">
+          <div class="dot"></div> Independent Studio
+        </div>
+        <h1 id="hero-h1" style="max-width:18ch; font-size:clamp(2.25rem, 5vw, 3.75rem); font-weight:600; line-height:0.98; letter-spacing:-0.02em;">
+          <!-- JS will inject line reveals here -->
+        </h1>
+        <div id="hero-rating" class="reveal-fade-up" style="display:flex; align-items:center; gap:0.75rem;">
+          <span style="color:var(--accent); display:flex; gap:0.1rem; font-size:1rem;">
+            <svg viewBox="0 0 24 24" style="width:1em; height:1em; fill:currentColor;"><path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.9l-5.8 3.05 1.1-6.46-4.69-4.58 6.49-.94L12 2.5z"/></svg>
+            <svg viewBox="0 0 24 24" style="width:1em; height:1em; fill:currentColor;"><path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.9l-5.8 3.05 1.1-6.46-4.69-4.58 6.49-.94L12 2.5z"/></svg>
+            <svg viewBox="0 0 24 24" style="width:1em; height:1em; fill:currentColor;"><path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.9l-5.8 3.05 1.1-6.46-4.69-4.58 6.49-.94L12 2.5z"/></svg>
+            <svg viewBox="0 0 24 24" style="width:1em; height:1em; fill:currentColor;"><path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.9l-5.8 3.05 1.1-6.46-4.69-4.58 6.49-.94L12 2.5z"/></svg>
+            <svg viewBox="0 0 24 24" style="width:1em; height:1em; fill:currentColor;"><path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.9l-5.8 3.05 1.1-6.46-4.69-4.58 6.49-.94L12 2.5z"/></svg>
+          </span>
+          <span style="font-size:0.875rem; font-weight:500; color:rgba(17,17,17,.7);">200+ brands shipped</span>
+        </div>
+        <div id="hero-ctas" class="reveal-fade-up" style="display:flex; flex-wrap:wrap; gap:0.75rem;">
+          <button class="pill-btn dark with-arrow" onclick="openRequestModal()">
+            <span class="hover-scale pill-btn-inner">
+              Let's Talk
+              <span class="pill-badge arrow-right">
+                <svg viewBox="0 0 24 24" style="width:1rem; height:1rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </span>
+            </span>
+          </button>
+          <button class="pill-btn outline" onclick="smoothScrollTo('works')">
+            <span class="hover-scale pill-btn-inner">View Work</span>
+          </button>
+        </div>
+      </div>
+      <!-- Right -->
+      <div class="hero-right" style="display:flex; flex-direction:column; align-items:flex-start; gap:2rem;">
+        <!-- HeroCard Carousel -->
+        <div id="hero-card" class="reveal-scale" style="width:100%; max-width:24rem; border-radius:1.25rem; background:rgba(255,255,255,.7); padding:0.5rem; box-shadow:0 1px 2px 0 rgba(0,0,0,0.05), inset 0 0 0 1px rgba(230,229,226,.7); backdrop-filter:blur(12px);">
+          <div style="display:flex; gap:0.5rem; cursor:pointer; border-radius:0.875rem;" onclick="nextCarousel(event)">
+            <div style="aspect-ratio:1; width:6rem; display:grid; place-items:center; border-radius:0.875rem; background:#0a0a0a; font-size:1.875rem; color:#fff;">
+              <svg viewBox="0 0 48 48" style="width:1em; height:1em; fill:var(--accent-from);"><path d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/></svg>
+            </div>
+            <div style="flex:1; border-radius:0.875rem; background:rgba(241,240,238,.7); padding:0.75rem; display:flex; flex-direction:column; justify-content:space-between;">
+              <div style="position:relative; min-height:3.25rem; overflow:hidden;" id="carousel-slot">
+                <!-- JS injected items -->
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+                <div style="display:flex; gap:0.25rem; align-items:center;" id="carousel-dots">
+                  <div class="dot" style="height:0.25rem; border-radius:9999px; width:1rem; background:rgba(17,17,17,.7); transition:all .3s;"></div>
+                  <div class="dot" style="height:0.25rem; border-radius:9999px; width:0.375rem; background:rgba(17,17,17,.2); transition:all .3s;"></div>
+                  <div class="dot" style="height:0.25rem; border-radius:9999px; width:0.375rem; background:rgba(17,17,17,.2); transition:all .3s;"></div>
+                </div>
+                <div style="display:flex; gap:0.25rem;">
+                  <button style="width:1.75rem; height:1.75rem; display:grid; place-items:center; border-radius:9999px; background:#fff; color:rgba(17,17,17,.7); box-shadow:inset 0 0 0 1px #e6e5e2;" onclick="prevCarousel(event)" class="carousel-btn">
+                    <svg viewBox="0 0 24 24" style="width:1rem; height:1rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none; transform:rotate(180deg);"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </button>
+                  <button style="width:1.75rem; height:1.75rem; display:grid; place-items:center; border-radius:9999px; background:#fff; color:rgba(17,17,17,.7); box-shadow:inset 0 0 0 1px #e6e5e2;" onclick="nextCarousel(event)" class="carousel-btn">
+                    <svg viewBox="0 0 24 24" style="width:1rem; height:1rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Partners -->
+        <div id="hero-partners" class="reveal-fade-up" style="width:100%; max-width:24rem;">
+          <div class="partners-label" style="margin-bottom:0.75rem; font-size:0.75rem; font-weight:500; color:rgba(17,17,17,.45); text-align:left;">Trusted by</div>
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); column-gap:1rem; row-gap:0.75rem;">
+            <span class="hover-lift" style="display:flex; align-items:center; gap:0.375rem; font-size:0.75rem; color:rgba(17,17,17,.7);">
+              <svg viewBox="0 0 24 24" style="width:0.875rem; height:0.875rem; stroke:rgba(17,17,17,.4); stroke-width:1.6; fill:none;"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"/></svg>
+              Kaido
+            </span>
+            <span class="hover-lift" style="display:flex; align-items:center; gap:0.375rem; font-size:0.75rem; color:rgba(17,17,17,.7);">
+              <svg viewBox="0 0 24 24" style="width:0.875rem; height:0.875rem; stroke:rgba(17,17,17,.4); stroke-width:1.6; fill:none;"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"/></svg>
+              Northpeak
+            </span>
+            <span class="hover-lift" style="display:flex; align-items:center; gap:0.375rem; font-size:0.75rem; color:rgba(17,17,17,.7);">
+              <svg viewBox="0 0 24 24" style="width:0.875rem; height:0.875rem; stroke:rgba(17,17,17,.4); stroke-width:1.6; fill:none;"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"/></svg>
+              Vellum
+            </span>
+            <span class="hover-lift" style="display:flex; align-items:center; gap:0.375rem; font-size:0.75rem; color:rgba(17,17,17,.7);">
+              <svg viewBox="0 0 24 24" style="width:0.875rem; height:0.875rem; stroke:rgba(17,17,17,.4); stroke-width:1.6; fill:none;"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"/></svg>
+              Orbit
+            </span>
+            <span class="hover-lift" style="display:flex; align-items:center; gap:0.375rem; font-size:0.75rem; color:rgba(17,17,17,.7);">
+              <svg viewBox="0 0 24 24" style="width:0.875rem; height:0.875rem; stroke:rgba(17,17,17,.4); stroke-width:1.6; fill:none;"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"/></svg>
+              Brightline
+            </span>
+            <span class="hover-lift" style="display:flex; align-items:center; gap:0.375rem; font-size:0.75rem; color:rgba(17,17,17,.7);">
+              <svg viewBox="0 0 24 24" style="width:0.875rem; height:0.875rem; stroke:rgba(17,17,17,.4); stroke-width:1.6; fill:none;"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"/></svg>
+              Cobalt
+            </span>
+            <span class="hover-lift" style="display:flex; align-items:center; gap:0.375rem; font-size:0.75rem; color:rgba(17,17,17,.7);">
+              <svg viewBox="0 0 24 24" style="width:0.875rem; height:0.875rem; stroke:rgba(17,17,17,.4); stroke-width:1.6; fill:none;"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"/></svg>
+              Mesa
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Bottom Status Bar -->
+    <div id="hero-status" class="shell" style="display:flex; align-items:center; justify-content:space-between; gap:0.75rem; border-top:1px solid rgba(17,17,17,.1); padding-block:1.25rem; font-size:0.75rem; font-weight:500; text-transform:uppercase; letter-spacing:0.025em; color:rgba(17,17,17,.6); opacity:0; transition:opacity 0.8s cubic-bezier(.16,1,.3,1);">
+      <span>Working since 2014</span>
+      <span class="status-center" style="display:none;">Remote-first, worldwide</span>
+      <span style="display:inline-flex; gap:0.5rem; align-items:center;">Scroll to explore <span>↓</span></span>
+    </div>
+  </section>
+<style>
+@media (min-width:640px) {
+  .hero-grid { padding-inline:2rem !important; }
+  #hero-status { padding-inline:2rem !important; }
+  .status-center { display:inline-block !important; }
+}
+@media (min-width:1024px) {
+  .hero-grid { display:grid !important; min-height:100lvh; grid-template-columns:repeat(12,1fr); gap:2.5rem; padding:9rem 2rem 7rem !important; }
+  .hero-left { grid-column: span 7; }
+  .hero-right { grid-column: span 5; align-items:flex-end !important; }
+  #hero-card { max-width:19rem !important; }
+  #hero-partners { max-width:19rem !important; }
+  .partners-label { text-align:right !important; }
+}
+.carousel-btn:hover { color:#111 !important; }
+</style>
+
+  <!-- 3) About -->
+  <section id="about" style="background:#fff;">
+    <div class="shell about-grid" style="display:grid; grid-template-columns:1fr; align-items:center; gap:3rem; padding-block:5rem;">
+      <!-- Left -->
+      <div style="position:relative; min-height:14rem;" class="about-left">
+        <svg viewBox="0 0 24 24" class="globe-bg" style="position:absolute; left:-1rem; top:50%; transform:translateY(-50%); width:12rem; height:12rem; color:rgba(17,17,17,.1); stroke:currentColor; stroke-width:1.4; fill:none;">
+          <circle cx="12" cy="12" r="9.25"/><path d="M12 2.75c2.6 2.3 4 5.8 4 9.25s-1.4 6.95-4 9.25c-2.6-2.3-4-5.8-4-9.25s1.4-6.95 4-9.25zM2.75 12h18.5"/>
+        </svg>
+        <div class="eyebrow dark" style="position:relative;"><div class="dot"></div> The Studio</div>
+        <div class="reveal-up" data-reveal style="display:flex; align-items:center; gap:0.75rem; font-size:0.875rem; color:rgba(17,17,17,.7); margin-top:auto; position:absolute; bottom:0;">
+          <svg viewBox="0 0 24 24" style="width:1.5rem; height:1.5rem; color:#111; stroke:currentColor; stroke-width:1.4; fill:none;">
+            <circle cx="12" cy="12" r="9.25"/><path d="M12 2.75c2.6 2.3 4 5.8 4 9.25s-1.4 6.95-4 9.25c-2.6-2.3-4-5.8-4-9.25s1.4-6.95 4-9.25zM2.75 12h18.5"/>
+          </svg>
+          <span style="max-width:14rem;">A distributed team building across every time zone.</span>
+        </div>
+      </div>
+      <!-- Right -->
+      <div style="display:flex; flex-direction:column; gap:2.5rem;">
+        <h2 id="about-statement" style="font-size:clamp(1.5rem, 3.5vw, 1.875rem); font-weight:500; line-height:1.35; letter-spacing:-0.01em;">
+          <!-- JS Word Reveal -->
+        </h2>
+        <div class="reveal-fade-up" data-reveal style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:1.5rem; border-top:1px solid var(--line); padding-top:1.5rem; transition-delay:200ms;">
+          <div>
+            <div style="font-size:0.875rem; color:rgba(17,17,17,.45); margin-bottom:0.5rem;">Find us online</div>
+            <div style="display:flex; gap:0.5rem;">
+              <a href="#" class="hover-scale-118" style="width:2.25rem; height:2.25rem; display:grid; place-items:center; border-radius:9999px; font-size:0.875rem; background:#b15f2c; color:#fff;">
+                <svg viewBox="0 0 24 24" style="width:1em; height:1em; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M4 4l16 16M20 4 4 20"/></svg>
+              </a>
+              <a href="#" class="hover-scale-118" style="width:2.25rem; height:2.25rem; display:grid; place-items:center; border-radius:9999px; font-size:0.875rem; background:var(--surface); color:rgba(17,17,17,.7);">
+                <svg viewBox="0 0 24 24" style="width:1em; height:1em; stroke:currentColor; stroke-width:1.6; fill:none;"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"/></svg>
+              </a>
+              <a href="#" class="hover-scale-118" style="width:2.25rem; height:2.25rem; display:grid; place-items:center; border-radius:9999px; font-size:0.875rem; background:var(--surface); color:rgba(17,17,17,.7);">
+                <svg viewBox="0 0 24 24" style="width:1em; height:1em; stroke:currentColor; stroke-width:1.6; fill:none;"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"/></svg>
+              </a>
+            </div>
+          </div>
+          <button class="pill-btn outline with-arrow" onclick="smoothScrollTo('about')">
+            <span class="hover-scale pill-btn-inner">
+              About Us
+              <span class="pill-badge arrow-right">
+                <svg viewBox="0 0 24 24" style="width:1rem; height:1rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+<style>
+@media (min-width:640px) { .globe-bg { width:16rem !important; height:16rem !important; } }
+@media (min-width:1024px) {
+  .about-grid { grid-template-columns:1fr 1fr !important; padding-block:7rem !important; }
+  .about-left { min-height:20rem !important; }
+  .globe-bg { left:-1.5rem !important; width:20rem !important; height:20rem !important; }
+}
+</style>
+
+  <!-- 4) CreateBand -->
+  <section style="background:#fff;">
+    <ul class="shell band-ul" style="display:flex; flex-direction:column; gap:0.75rem; padding-block:2.5rem;">
+      <li class="reveal-up" data-reveal style="flex:1; transition-delay:0ms;">
+        <div class="hover-scale band-tile" style="background:var(--surface); color:#111;">We</div>
+      </li>
+      <li class="reveal-up" data-reveal style="flex:1; transition-delay:120ms;">
+        <div class="hover-scale band-tile" style="background:linear-gradient(to bottom right,#cf8047,#97501f); color:#fff;">Build</div>
+      </li>
+      <li class="reveal-up" data-reveal style="flex:1; transition-delay:240ms;">
+        <div class="hover-scale band-tile" style="background:#0a0a0a; color:#fff;">
+          <svg viewBox="0 0 24 24" style="width:1em; height:1em; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+      </li>
+      <li class="reveal-up" data-reveal style="flex:1; transition-delay:360ms;">
+        <div class="hover-scale band-tile" style="background:rgba(241,240,238,.6); color:rgba(17,17,17,.35);">Better</div>
+      </li>
+    </ul>
+  </section>
+<style>
+.band-tile {
+  display:grid; place-items:center; height:6rem; border-radius:9999px;
+  font-size:1.875rem; font-weight:500;
+  transition: transform 0.35s cubic-bezier(.2,.8,.2,1);
+}
+@media (min-width:640px) {
+  .band-ul { flex-direction:row !important; gap:1rem !important; }
+  .band-tile { height:10rem !important; font-size:2.25rem !important; }
+  .band-tile svg { font-size:3rem !important; }
+}
+</style>
+
+  <!-- 5) Portfolio -->
+  <section id="works" style="background:#fff;">
+    <div class="shell portfolio-shell" style="padding-block:2.5rem 5rem;">
+      <div style="text-align:center;">
+        <div class="reveal-clip" style="display:inline-block;"><div class="reveal-fade-up" data-reveal>
+          <div class="eyebrow dark" style="border:1px solid var(--line); border-radius:9999px; padding:0.375rem 1rem;">
+            <div class="dot"></div> Portfolio
+          </div>
+        </div></div>
+        <h2 id="portfolio-h2" style="margin:1rem auto 2.5rem; width:fit-content; font-size:clamp(2.25rem, 5vw, 3rem); font-weight:600; letter-spacing:-0.02em;">
+          <!-- JS line reveal -->
+        </h2>
+      </div>
+      <ul class="portfolio-grid" style="display:grid; grid-template-columns:1fr; gap:1.5rem;">
+        <!-- Card 1 -->
+        <li class="reveal-up" data-reveal style="transition-delay:0ms;">
+          <a href="#" class="group" style="display:block;">
+            <article class="group-hover-lift port-card">
+              <div style="display:flex; justify-content:space-between; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.025em; color:rgba(255,255,255,.45); position:relative; z-index:10;">
+                <span>Branding — 2025</span>
+                <div class="group-hover-badge" style="width:2.75rem; height:2.75rem; display:grid; place-items:center; border-radius:9999px; background:rgba(255,255,255,.1); color:#fff; box-shadow:inset 0 0 0 1px rgba(255,255,255,.15);">
+                  <svg viewBox="0 0 24 24" style="width:1.25rem; height:1.25rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M7 17 17 7M8 7h9v9"/></svg>
+                </div>
+              </div>
+              <div style="position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; z-index:1;">
+                <svg viewBox="0 0 48 48" style="width:4.5rem; height:4.5rem; fill:rgba(255,255,255,.9); position:relative;">
+                  <path d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/>
+                </svg>
+                <span style="position:absolute; font-size:0.75rem; color:rgba(255,255,255,.6); transform:translate(2.5rem, -2.5rem);">®</span>
+              </div>
+              <div class="port-bottom">
+                <h3 style="font-size:clamp(1.5rem, 3vw, 1.875rem); font-weight:500; letter-spacing:-0.01em;">Aster Labs</h3>
+                <p style="margin-top:0.5rem; max-width:28rem; font-size:0.875rem; color:rgba(255,255,255,.55);">A complete identity and go-to-market system for a fast-moving research startup.</p>
+                <div style="margin-top:1.25rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
+                  <span class="tag-chip light">Branding</span><span class="tag-chip light">Strategy</span><span class="tag-chip light">Design</span>
+                </div>
+              </div>
+            </article>
+          </a>
+        </li>
+        <!-- Card 2 -->
+        <li class="reveal-up" data-reveal style="transition-delay:90ms;">
+          <a href="#" class="group" style="display:block;">
+            <article class="group-hover-lift port-card">
+              <div style="display:flex; justify-content:space-between; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.025em; color:rgba(255,255,255,.45); position:relative; z-index:10;">
+                <span>Product — 2024</span>
+                <div class="group-hover-badge" style="width:2.75rem; height:2.75rem; display:grid; place-items:center; border-radius:9999px; background:rgba(255,255,255,.1); color:#fff; box-shadow:inset 0 0 0 1px rgba(255,255,255,.15);">
+                  <svg viewBox="0 0 24 24" style="width:1.25rem; height:1.25rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M7 17 17 7M8 7h9v9"/></svg>
+                </div>
+              </div>
+              <div style="position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; z-index:1;">
+                <svg viewBox="0 0 48 48" style="width:4.5rem; height:4.5rem; fill:rgba(255,255,255,.9); position:relative;">
+                  <path d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/>
+                </svg>
+                <span style="position:absolute; font-size:0.75rem; color:rgba(255,255,255,.6); transform:translate(2.5rem, -2.5rem);">®</span>
+              </div>
+              <div class="port-bottom">
+                <h3 style="font-size:clamp(1.5rem, 3vw, 1.875rem); font-weight:500; letter-spacing:-0.01em;">Nova Finance</h3>
+                <p style="margin-top:0.5rem; max-width:28rem; font-size:0.875rem; color:rgba(255,255,255,.55);">A finance platform reimagined — clear data, calm interfaces, and effortless flows.</p>
+                <div style="margin-top:1.25rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
+                  <span class="tag-chip light">Product Design</span><span class="tag-chip light">Web App</span><span class="tag-chip light">QA</span>
+                </div>
+              </div>
+            </article>
+          </a>
+        </li>
+        <!-- Card 3 -->
+        <li class="reveal-up" data-reveal style="transition-delay:180ms;">
+          <a href="#" class="group" style="display:block;">
+            <article class="group-hover-lift port-card">
+              <div style="display:flex; justify-content:space-between; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.025em; color:rgba(255,255,255,.45); position:relative; z-index:10;">
+                <span>Identity — 2023</span>
+                <div class="group-hover-badge" style="width:2.75rem; height:2.75rem; display:grid; place-items:center; border-radius:9999px; background:rgba(255,255,255,.1); color:#fff; box-shadow:inset 0 0 0 1px rgba(255,255,255,.15);">
+                  <svg viewBox="0 0 24 24" style="width:1.25rem; height:1.25rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M7 17 17 7M8 7h9v9"/></svg>
+                </div>
+              </div>
+              <div style="position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; z-index:1;">
+                <svg viewBox="0 0 48 48" style="width:4.5rem; height:4.5rem; fill:rgba(255,255,255,.9); position:relative;">
+                  <path d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/>
+                </svg>
+                <span style="position:absolute; font-size:0.75rem; color:rgba(255,255,255,.6); transform:translate(2.5rem, -2.5rem);">®</span>
+              </div>
+              <div class="port-bottom">
+                <h3 style="font-size:clamp(1.5rem, 3vw, 1.875rem); font-weight:500; letter-spacing:-0.01em;">Helio Studio</h3>
+                <p style="margin-top:0.5rem; max-width:28rem; font-size:0.875rem; color:rgba(255,255,255,.55);">A bold visual identity and art direction system built to scale across every surface.</p>
+                <div style="margin-top:1.25rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
+                  <span class="tag-chip light">Brand Identity</span><span class="tag-chip light">Art Direction</span>
+                </div>
+              </div>
+            </article>
+          </a>
+        </li>
+        <!-- Card 4 -->
+        <li class="reveal-up" data-reveal style="transition-delay:270ms;">
+          <a href="#" class="group" style="display:block;">
+            <article class="group-hover-lift port-card">
+              <div style="display:flex; justify-content:space-between; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.025em; color:rgba(255,255,255,.45); position:relative; z-index:10;">
+                <span>Mobile — 2023</span>
+                <div class="group-hover-badge" style="width:2.75rem; height:2.75rem; display:grid; place-items:center; border-radius:9999px; background:rgba(255,255,255,.1); color:#fff; box-shadow:inset 0 0 0 1px rgba(255,255,255,.15);">
+                  <svg viewBox="0 0 24 24" style="width:1.25rem; height:1.25rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M7 17 17 7M8 7h9v9"/></svg>
+                </div>
+              </div>
+              <div style="position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; z-index:1;">
+                <svg viewBox="0 0 48 48" style="width:4.5rem; height:4.5rem; fill:rgba(255,255,255,.9); position:relative;">
+                  <path d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/>
+                </svg>
+                <span style="position:absolute; font-size:0.75rem; color:rgba(255,255,255,.6); transform:translate(2.5rem, -2.5rem);">®</span>
+              </div>
+              <div class="port-bottom">
+                <h3 style="font-size:clamp(1.5rem, 3vw, 1.875rem); font-weight:500; letter-spacing:-0.01em;">Pulse Health</h3>
+                <p style="margin-top:0.5rem; max-width:28rem; font-size:0.875rem; color:rgba(255,255,255,.55);">A wellness app grounded in research, shipped end to end from concept to release.</p>
+                <div style="margin-top:1.25rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
+                  <span class="tag-chip light">Mobile App</span><span class="tag-chip light">UX Research</span><span class="tag-chip light">Development</span>
+                </div>
+              </div>
+            </article>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+<style>
+.port-card {
+  position:relative; min-height:22rem; overflow:hidden; border-radius:2rem; background:var(--ink);
+  padding:1.5rem; color:#fff; box-shadow:inset 0 0 0 1px rgba(255,255,255,.05);
+}
+.port-bottom { position:absolute; inset-inline:1.5rem; bottom:1.5rem; z-index:10; }
+@media (min-width:768px) { .portfolio-grid { grid-template-columns:repeat(2,1fr) !important; } }
+@media (min-width:640px) {
+  .port-card { min-height:26rem !important; padding:2rem !important; }
+  .port-bottom { inset-inline:2rem !important; bottom:2rem !important; }
+}
+@media (min-width:1024px) { .portfolio-shell { padding-bottom:7rem !important; } }
+</style>
+
+  <!-- 6) Services -->
+  <section id="services" style="background:#fff;">
+    <div class="shell services-shell" style="padding-block:5rem;">
+      <div class="reveal-clip" style="display:inline-block;"><div class="reveal-fade-up eyebrow dark" data-reveal>
+        <div class="dot"></div> Services
+      </div></div>
+      <h2 id="services-h2" style="margin:1.25rem 0 3rem; max-width:16ch; font-size:clamp(2.25rem, 5vw, 3rem); font-weight:600; letter-spacing:-0.02em;">
+        <!-- JS line reveal -->
+      </h2>
+      <ul style="display:flex; flex-direction:column;">
+        <li class="reveal-up" data-reveal style="transition-delay:0ms;">
+          <a href="#" style="display:block;" class="row-group">
+            <div style="display:flex; align-items:center; gap:1rem; border-radius:1.25rem; padding-block:1.5rem;" class="svc-row">
+              <span class="svc-num">01</span>
+              <h3 class="svc-title">Software Development</h3>
+              <p class="svc-desc">Scalable web & mobile products built to last.</p>
+              <div class="row-group-badge svc-badge">
+                <svg viewBox="0 0 24 24" style="width:1.25rem; height:1.25rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M7 17 17 7M8 7h9v9"/></svg>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li class="reveal-up" data-reveal style="border-top:1px solid var(--line); transition-delay:80ms;">
+          <a href="#" style="display:block;" class="row-group">
+            <div style="display:flex; align-items:center; gap:1rem; border-radius:1.25rem; padding-block:1.5rem;" class="svc-row">
+              <span class="svc-num">02</span>
+              <h3 class="svc-title">Product Design</h3>
+              <p class="svc-desc">Interfaces that feel effortless and look sharp.</p>
+              <div class="row-group-badge svc-badge">
+                <svg viewBox="0 0 24 24" style="width:1.25rem; height:1.25rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M7 17 17 7M8 7h9v9"/></svg>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li class="reveal-up" data-reveal style="border-top:1px solid var(--line); transition-delay:160ms;">
+          <a href="#" style="display:block;" class="row-group">
+            <div style="display:flex; align-items:center; gap:1rem; border-radius:1.25rem; padding-block:1.5rem;" class="svc-row">
+              <span class="svc-num">03</span>
+              <h3 class="svc-title">Quality Assurance</h3>
+              <p class="svc-desc">Rigorous testing for flawless, confident releases.</p>
+              <div class="row-group-badge svc-badge">
+                <svg viewBox="0 0 24 24" style="width:1.25rem; height:1.25rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M7 17 17 7M8 7h9v9"/></svg>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li class="reveal-up" data-reveal style="border-top:1px solid var(--line); transition-delay:240ms;">
+          <a href="#" style="display:block;" class="row-group">
+            <div style="display:flex; align-items:center; gap:1rem; border-radius:1.25rem; padding-block:1.5rem;" class="svc-row">
+              <span class="svc-num">04</span>
+              <h3 class="svc-title">Consulting</h3>
+              <p class="svc-desc">Strategy and direction for ambitious teams.</p>
+              <div class="row-group-badge svc-badge">
+                <svg viewBox="0 0 24 24" style="width:1.25rem; height:1.25rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M7 17 17 7M8 7h9v9"/></svg>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+<style>
+.svc-num { width:1.75rem; font-size:0.875rem; font-weight:500; color:rgba(17,17,17,.4); }
+.svc-title { flex:1; font-size:clamp(1.5rem, 3.5vw, 2.25rem); font-weight:500; letter-spacing:-0.01em; }
+.svc-desc { display:none; max-width:20rem; font-size:0.875rem; color:rgba(17,17,17,.55); }
+.svc-badge { width:2.5rem; height:2.5rem; display:grid; place-items:center; border-radius:9999px; background:var(--ink); color:#fff; }
+@media (min-width:640px) {
+  .services-h2 { margin-bottom:3.5rem !important; }
+  .svc-row { gap:1.5rem !important; padding-block:2rem !important; }
+  .svc-num { width:2.5rem !important; }
+  .svc-badge { width:3rem !important; height:3rem !important; }
+}
+@media (min-width:1024px) {
+  .services-shell { padding-block:7rem !important; }
+  .svc-desc { display:block !important; }
+}
+</style>
+
+  <!-- 7) Stats -->
+  <section style="background:#fff;">
+    <div class="shell stats-shell" style="padding-bottom:5rem;">
+      <div class="reveal-up stats-panel" data-reveal style="border-radius:2rem; background:var(--ink); padding:3rem 1.5rem; color:#fff;">
+        <div class="eyebrow light"><div class="dot"></div> By the numbers</div>
+        <h2 id="stats-h2" style="margin-top:1rem; max-width:20ch; font-size:clamp(1.875rem, 4vw, 2.25rem); font-weight:500; letter-spacing:-0.01em;">
+          <!-- JS line reveal -->
+        </h2>
+        <ul class="stats-grid" style="margin-top:3.5rem; display:grid; grid-template-columns:repeat(2,1fr); column-gap:2rem; row-gap:3rem;">
+          <li class="reveal-up stat-item" data-reveal style="transition-delay:0ms;">
+            <div style="font-size:clamp(3rem, 6vw, 4.5rem); font-weight:600; letter-spacing:-0.02em;">
+              <span class="stat-num" data-target="150">0</span>+
+            </div>
+            <div style="margin-top:0.75rem; font-size:0.875rem; color:rgba(255,255,255,.55);">Projects delivered</div>
+          </li>
+          <li class="reveal-up stat-item" data-reveal style="transition-delay:90ms;">
+            <div style="font-size:clamp(3rem, 6vw, 4.5rem); font-weight:600; letter-spacing:-0.02em;">
+              <span class="stat-num" data-target="98">0</span>%
+            </div>
+            <div style="margin-top:0.75rem; font-size:0.875rem; color:rgba(255,255,255,.55);">Client retention</div>
+          </li>
+          <li class="reveal-up stat-item" data-reveal style="transition-delay:180ms;">
+            <div style="font-size:clamp(3rem, 6vw, 4.5rem); font-weight:600; letter-spacing:-0.02em;">
+              <span class="stat-num" data-target="12">0</span>
+            </div>
+            <div style="margin-top:0.75rem; font-size:0.875rem; color:rgba(255,255,255,.55);">Years of craft</div>
+          </li>
+          <li class="reveal-up stat-item" data-reveal style="transition-delay:270ms;">
+            <div style="font-size:clamp(3rem, 6vw, 4.5rem); font-weight:600; letter-spacing:-0.02em;">
+              <span class="stat-num" data-target="40">0</span>+
+            </div>
+            <div style="margin-top:0.75rem; font-size:0.875rem; color:rgba(255,255,255,.55);">Team members</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+<style>
+@media (min-width:640px) { .stats-panel { padding:4rem 2rem !important; } }
+@media (min-width:768px) { .stats-panel { padding-inline:4rem !important; } }
+@media (min-width:1024px) {
+  .stats-shell { padding-bottom:7rem !important; }
+  .stats-grid { grid-template-columns:repeat(4,1fr) !important; }
+}
+</style>
+</main>
+
+<!-- 8) Footer -->
+<footer style="position:relative; overflow:hidden; border-radius:2rem 2rem 0 0; background:var(--ink); color:#fff;">
+  <div class="shell footer-inner" style="position:relative; z-index:10; padding:5rem 1.25rem 2.5rem;">
+    <!-- CTA row -->
+    <div class="footer-cta" style="display:flex; flex-direction:column; gap:2rem; border-bottom:1px solid rgba(255,255,255,.1); padding-bottom:4rem;">
+      <h2 id="footer-h2" style="max-width:16ch; font-size:clamp(2.25rem, 5vw, 3.75rem); font-weight:600; letter-spacing:-0.02em;">
+        <!-- JS line reveal -->
+      </h2>
+      <button class="pill-btn light with-arrow" onclick="openRequestModal()">
+        <span class="hover-scale pill-btn-inner">
+          Start a project
+          <span class="pill-badge arrow-up-right">
+            <svg viewBox="0 0 24 24" style="width:1rem; height:1rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </span>
+        </span>
+      </button>
+    </div>
+    <!-- Columns -->
+    <div class="footer-cols" style="display:grid; grid-template-columns:1fr; gap:3rem; padding-block:4rem;">
+      <!-- Brand col -->
+      <div>
+        <div style="display:flex; align-items:center; gap:0.5rem; font-size:1.125rem; font-weight:600; margin-bottom:1rem;">
+          <svg viewBox="0 0 48 48" style="width:1.25rem; height:1.25rem; fill:currentColor;"><path d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/></svg>
+          Lumora
+        </div>
+        <p style="max-width:20rem; font-size:0.875rem; color:rgba(255,255,255,.55);">An independent studio crafting brands, products, and the systems that connect them.</p>
+      </div>
+      <!-- Company -->
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.025em; color:rgba(255,255,255,.4);">Company</div>
+        <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.875rem; align-items:flex-start;">
+          <a href="#about" class="anim-link">About</a>
+          <a href="#careers" class="anim-link">Careers</a>
+          <a href="#partners" class="anim-link">Partners</a>
+          <button onclick="openRequestModal()" class="anim-link" style="padding:0; text-align:left;">Contact</button>
+        </div>
+      </div>
+      <!-- Services -->
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.025em; color:rgba(255,255,255,.4);">Services</div>
+        <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.875rem; align-items:flex-start;">
+          <a href="#development" class="anim-link">Development</a>
+          <a href="#design" class="anim-link">Design</a>
+          <a href="#qa" class="anim-link">Quality Assurance</a>
+          <a href="#consulting" class="anim-link">Consulting</a>
+        </div>
+      </div>
+      <!-- Social -->
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.025em; color:rgba(255,255,255,.4);">Social</div>
+        <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.875rem; align-items:flex-start;">
+          <a href="#" class="anim-link">X / Twitter</a>
+          <a href="#" class="anim-link">Behance</a>
+          <a href="#" class="anim-link">Dribbble</a>
+          <a href="#" class="anim-link">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+    <!-- Legal -->
+    <div class="footer-legal" style="display:flex; flex-direction:column; align-items:center; justify-content:space-between; gap:1rem; border-top:1px solid rgba(255,255,255,.1); padding-top:2rem; font-size:0.75rem; color:rgba(255,255,255,.45);">
+      <div>© 2025 Lumora Studio. All rights reserved.</div>
+      <div style="display:flex; gap:1.5rem;">
+        <a href="#privacy" class="anim-link-sm">Privacy</a>
+        <a href="#terms" class="anim-link-sm">Terms</a>
+      </div>
+    </div>
+  </div>
+  <!-- Watermark -->
+  <div style="position:absolute; inset-inline:0; bottom:-1.5rem; z-index:0; text-align:center; pointer-events:none; user-select:none; font-weight:700; line-height:1; font-size:var(--text-watermark); color:rgba(255,255,255,.05);">LUMORA</div>
+</footer>
+<style>
+@media (min-width:640px) {
+  .footer-legal { flex-direction:row !important; }
+}
+@media (min-width:768px) {
+  .footer-cols { grid-template-columns:repeat(2,1fr) !important; }
+}
+@media (min-width:1024px) {
+  .footer-inner { padding-top:6rem !important; }
+  .footer-cta { flex-direction:row !important; align-items:flex-end !important; justify-content:space-between !important; }
+  .footer-cols { grid-template-columns:repeat(4,1fr) !important; }
+}
+</style>
+
+<!-- 9) NavMenu (Overlay) -->
+<div id="nav-menu" class="overlay">
+  <!-- Top bar -->
+  <div class="shell" style="width:100%; display:flex; align-items:center; justify-content:space-between; padding-block:1.25rem;">
+    <div style="font-size:1.125rem; font-weight:600; display:flex; align-items:center; gap:0.5rem;">
+      <svg viewBox="0 0 48 48" style="width:1.25rem; height:1.25rem; fill:#cf8047;"><path d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/></svg>
+      Lumora
+    </div>
+    <button onclick="closeNavMenu()" class="hover-scale-105" style="display:inline-flex; align-items:center; gap:0.5rem; border:1px solid rgba(255,255,255,.15); border-radius:0.875rem; padding:0.5rem 1rem; font-size:0.75rem; font-weight:500; text-transform:uppercase; letter-spacing:0.05em; color:rgba(255,255,255,.7); transition:all .3s;">
+      <svg viewBox="0 0 24 24" style="width:0.875rem; height:0.875rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M4 4l16 16M20 4 4 20"/></svg>
+      Close
+    </button>
+  </div>
+  <!-- Nav -->
+  <div class="shell" style="width:100%; flex:1; display:flex; flex-direction:column; justify-content:center;">
+    <ul style="display:flex; flex-direction:column; gap:0.25rem;">
+      <li class="nav-item" style="transition-delay:80ms;"><button class="nav-btn" onclick="navTo('home')"><span class="nav-idx">01</span><span class="nav-lbl">Home</span></button></li>
+      <li class="nav-item" style="transition-delay:125ms;"><button class="nav-btn" onclick="navTo('works')"><span class="nav-idx">02</span><span class="nav-lbl">Work</span></button></li>
+      <li class="nav-item" style="transition-delay:170ms;"><button class="nav-btn" onclick="navTo('services')"><span class="nav-idx">03</span><span class="nav-lbl">Services</span></button></li>
+      <li class="nav-item" style="transition-delay:215ms;"><button class="nav-btn" onclick="navTo('about')"><span class="nav-idx">04</span><span class="nav-lbl">Studio</span></button></li>
+      <li class="nav-item" style="transition-delay:260ms;"><button class="nav-btn" onclick="navTo('careers')"><span class="nav-idx">05</span><span class="nav-lbl">Careers</span></button></li>
+      <li class="nav-item" style="transition-delay:305ms;"><button class="nav-btn" onclick="navToContact()"><span class="nav-idx">06</span><span class="nav-lbl">Contact</span></button></li>
+    </ul>
+  </div>
+  <!-- Bottom bar -->
+  <div class="shell nav-bot" style="width:100%; display:flex; flex-direction:column; gap:0.75rem; border-top:1px solid rgba(255,255,255,.1); padding-block:1.5rem; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.025em; color:rgba(255,255,255,.45);">
+    <div style="display:flex; align-items:center; gap:0.5rem;">Local time — <span id="nav-time">9:41am</span></div>
+    <button onclick="navToContact()" style="color:rgba(255,255,255,.7); transition:color .3s; text-align:left;" onmouseover="this.style.color='#fff'; this.style.textDecoration='underline'" onmouseout="this.style.color='rgba(255,255,255,.7)'; this.style.textDecoration='none'">
+      Start a project →
+    </button>
+  </div>
+</div>
+<style>
+.nav-btn {
+  width:100%; display:flex; align-items:flex-start; gap:1rem; padding-block:0.5rem; text-align:left;
+  font-size:clamp(2.25rem, 6vw, 3.75rem); font-weight:600; letter-spacing:-0.02em;
+}
+.nav-idx { font-size:1rem; font-weight:400; color:rgba(255,255,255,.3); margin-top:0.5rem; transition:color .3s; }
+.nav-lbl { color:rgba(255,255,255,.7); transition:color .3s; }
+.nav-btn:hover .nav-idx { color:#cf8047; }
+.nav-btn:hover .nav-lbl { color:#fff; }
+@media (min-width:640px) {
+  .nav-bot { flex-direction:row !important; justify-content:space-between !important; }
+}
+</style>
+
+<!-- 10) RequestModal -->
+<div id="request-modal-backdrop" onclick="if(event.target===this) closeRequestModal()" role="dialog" aria-modal="true">
+  <div id="request-modal-panel">
+    <button onclick="closeRequestModal()" class="hover-scale" style="position:absolute; right:1rem; top:1rem; width:2.25rem; height:2.25rem; display:grid; place-items:center; border-radius:9999px; background:var(--surface); color:rgba(17,17,17,.6); z-index:10;">
+      <svg viewBox="0 0 24 24" style="width:1rem; height:1rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M4 4l16 16M20 4 4 20"/></svg>
+    </button>
+    <!-- Form View -->
+    <div id="modal-form-view">
+      <div style="margin-bottom:1.5rem; display:flex; flex-direction:column; gap:0.375rem;">
+        <div class="eyebrow dark"><div class="dot" style="background:var(--accent);"></div> Start a project</div>
+        <h2 style="font-size:clamp(1.5rem, 3.5vw, 1.875rem); font-weight:600; letter-spacing:-0.01em;">Tell us what you're building.</h2>
+      </div>
+      <form onsubmit="submitForm(event)" style="display:flex; flex-direction:column; gap:1rem;">
+        <label style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.75rem; font-weight:500; text-transform:uppercase; letter-spacing:0.025em; color:rgba(17,17,17,.5);">
+          Name
+          <input type="text" required placeholder="Your name" class="modal-input" />
+        </label>
+        <label style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.75rem; font-weight:500; text-transform:uppercase; letter-spacing:0.025em; color:rgba(17,17,17,.5);">
+          Email
+          <input type="email" required placeholder="you@company.com" class="modal-input" />
+        </label>
+        <label style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.75rem; font-weight:500; text-transform:uppercase; letter-spacing:0.025em; color:rgba(17,17,17,.5);">
+          Project
+          <textarea required rows="4" style="resize:none;" placeholder="A few words about your project, timeline, and budget." class="modal-input"></textarea>
+        </label>
+        <div style="margin-top:0.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem;">
+          <div style="font-size:0.75rem; color:rgba(17,17,17,.45);">We reply within one business day.</div>
+          <button type="submit" class="pill-btn dark with-arrow" id="modal-submit-btn">
+            <span class="hover-scale pill-btn-inner">
+              <span id="modal-submit-txt">Send request</span>
+              <span class="pill-badge arrow-up-right">
+                <svg viewBox="0 0 24 24" style="width:1rem; height:1rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M7 17 17 7M8 7h9v9"/></svg>
+              </span>
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+    <!-- Success View -->
+    <div id="modal-success-view" style="display:none; flex-direction:column; align-items:center; text-align:center; padding-block:2rem; gap:1rem;">
+      <div style="width:3.5rem; height:3.5rem; display:grid; place-items:center; border-radius:9999px; background:var(--ink); color:var(--accent-from); font-size:1.5rem;">
+        <svg viewBox="0 0 48 48" style="width:1em; height:1em; fill:currentColor;"><path d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/></svg>
+      </div>
+      <h2 style="font-size:1.5rem; font-weight:600;">Request received</h2>
+      <p style="max-width:32ch; font-size:0.875rem; color:rgba(17,17,17,.6);">Thanks for reaching out — we'll get back to you within one business day.</p>
+      <button class="pill-btn dark" onclick="closeRequestModal()" style="margin-top:0.5rem;">
+        <span class="hover-scale pill-btn-inner">Close</span>
+      </button>
+    </div>
+  </div>
+</div>
+<style>
+.modal-input {
+  width:100%; border:1px solid var(--line); background:rgba(241,240,238,.5);
+  border-radius:0.875rem; padding:0.75rem 1rem; font-size:0.875rem; outline:none; transition:all .3s;
+  font-family:inherit; color:inherit;
+}
+.modal-input:focus { border-color:rgba(17,17,17,.3); background:#fff; }
+</style>
+
+<script type="importmap">
+{ "imports": { "lenis": "https://unpkg.com/lenis@1.3.23/dist/lenis.mjs" } }
+</script>
+<script type="module">
+import Lenis from 'lenis';
+
+// Global state
+let scrollEnabled = true;
+let isReady = false;
+
+// Adaptive Grid
+function applyAdaptiveGrid(){
+  const FONT_BASE = 16, baseWidth = 1920, coef = 0.6666;
+  const w = window.innerWidth;
+  const widthReduction = ((baseWidth - w) / baseWidth) * 100;
+  const size = FONT_BASE - (FONT_BASE * (widthReduction * coef)) / 100;
+  if (size > FONT_BASE) document.documentElement.style.fontSize = size + 'px';
+  else document.documentElement.style.removeProperty('font-size');
+}
+applyAdaptiveGrid(); 
+window.addEventListener('resize', applyAdaptiveGrid);
+
+// Lenis Init
+window.scrollTo(0, 0);
+const lenis = new Lenis({ smoothWheel: true });
+function raf(t){ if(scrollEnabled) lenis.raf(t); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+
+// Scroll locks
+window.stopScroll = () => {
+  scrollEnabled = false;
+  lenis.stop();
+  document.documentElement.style.position = 'relative';
+  document.documentElement.style.overflow = 'hidden';
+  document.documentElement.style.height = '100%';
+};
+window.startScroll = () => {
+  scrollEnabled = true;
+  lenis.start();
+  document.documentElement.style.removeProperty('position');
+  document.documentElement.style.removeProperty('overflow');
+  document.documentElement.style.removeProperty('height');
+};
+
+// Smooth Scroll Helper
+window.smoothScrollTo = (id) => {
+  const el = document.getElementById(id);
+  if(!el) return;
+  // disable Lenis briefly, use native scroll
+  lenis.stop();
+  setTimeout(() => {
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset, behavior: 'smooth' });
+  }, 50);
+  setTimeout(() => {
+    lenis.start();
+  }, 100);
+};
+
+// Clock
+function updateClock() {
+  const now = new Date();
+  let h = now.getHours();
+  const m = now.getMinutes().toString().padStart(2, '0');
+  const ampm = h >= 12 ? 'pm' : 'am';
+  h = h % 12 || 12;
+  const timeStr = `${h}:${m}${ampm}`;
+  const day = now.getDate();
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const dateStr = `${day} ${monthNames[now.getMonth()]}, ${now.getFullYear()}`;
+  
+  const ht = document.getElementById('header-time');
+  const hd = document.getElementById('header-date');
+  const nt = document.getElementById('nav-time');
+  if(ht) ht.textContent = timeStr;
+  if(hd) hd.textContent = dateStr;
+  if(nt) nt.textContent = timeStr;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// Text Reveal Helpers
+function wrapLines(containerId, linesText, staggerMs) {
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  container.innerHTML = '';
+  linesText.forEach((line, i) => {
+    const wrapper = document.createElement('span');
+    wrapper.className = 'reveal-clip';
+    wrapper.style.display = 'block';
+    
+    const inner = document.createElement('span');
+    inner.className = 'reveal-line';
+    inner.textContent = line;
+    inner.style.transitionDelay = (i * staggerMs) + 'ms';
+    
+    wrapper.appendChild(inner);
+    container.appendChild(wrapper);
+  });
+}
+function wrapWords(containerId, text, staggerMs) {
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  container.innerHTML = '';
+  const parts = text.split(/(\s+)/); // keep spaces
+  let wordIdx = 0;
+  parts.forEach((part) => {
+    if(!part.trim()) {
+      container.appendChild(document.createTextNode(part));
+    } else {
+      const wrapper = document.createElement('span');
+      wrapper.className = 'reveal-clip';
+      wrapper.style.display = 'inline-block';
+      wrapper.style.verticalAlign = 'bottom';
+      
+      const inner = document.createElement('span');
+      inner.className = 'reveal-word';
+      if(part.includes("digital products")) { inner.style.color = "#8d8d8d"; }
+      if(part === "digital" || part === "products," || part === "brand" || part === "systems," || part === "and" || part === "the" || part === "strategy" || part === "that" || part === "holds" || part === "them" || part === "together.") {
+        inner.style.color = "#8d8d8d";
+      }
+      inner.textContent = part;
+      inner.style.transitionDelay = (wordIdx * staggerMs) + 'ms';
+      wordIdx++;
+      
+      wrapper.appendChild(inner);
+      container.appendChild(wrapper);
+    }
+  });
+}
+
+// Setup Content
+wrapLines('hero-h1', ['Bold ideas,', 'shipped with', 'quiet precision.'], 120);
+wrapLines('portfolio-h2', ['Selected Work'], 0);
+wrapLines('services-h2', ['What we do best'], 0);
+wrapLines('stats-h2', ['Proof in the work, not the words.'], 0);
+wrapLines('footer-h2', ['Have a project in mind?', "Let's get to work."], 100);
+wrapWords('about-statement', "We partner with ambitious teams to ship digital products, brand systems, and the strategy that holds them together.", 35);
+
+// Intersection Observer for Scroll Reveals
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      if(!isReady) return; // wait for loader
+      entry.target.classList.add('revealed');
+      // trigger child lines/words
+      const lines = entry.target.querySelectorAll('.reveal-line, .reveal-word');
+      lines.forEach(l => l.classList.add('revealed'));
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+// Loader
+stopScroll();
+const loader = document.getElementById('page-loader');
+const progressEl = document.getElementById('loader-progress');
+const countEl = document.getElementById('loader-count');
+let startTime = null;
+
+function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+
+function stepLoader(timestamp) {
+  if(!startTime) startTime = timestamp;
+  const elapsed = timestamp - startTime;
+  let t = Math.min(elapsed / 1300, 1); // FILL_MS = 1300
+  let prog = Math.round(easeInOutCubic(t) * 100);
+  
+  progressEl.style.width = prog + '%';
+  countEl.textContent = prog.toString().padStart(3, '0');
+  
+  if(t < 1) {
+    requestAnimationFrame(stepLoader);
+  } else {
+    // exit
+    setTimeout(() => {
+      loader.classList.add('exit');
+      setTimeout(() => {
+        loader.remove();
+        isReady = true;
+        startScroll();
+        triggerReadyReveals();
+      }, 700);
+    }, 100);
+  }
+}
+requestAnimationFrame(stepLoader);
+
+function triggerReadyReveals() {
+  // Manual hero triggers based on delays
+  setTimeout(() => document.getElementById('header').classList.add('revealed'), 150);
+  setTimeout(() => document.getElementById('hero-eyebrow').classList.add('revealed'), 200);
+  setTimeout(() => {
+    document.querySelectorAll('#hero-h1 .reveal-line').forEach(el => el.classList.add('revealed'));
+  }, 250);
+  setTimeout(() => document.getElementById('hero-watermark').style.opacity = '0.4', 300);
+  setTimeout(() => document.getElementById('hero-watermark').style.transform = 'translateY(0)', 300);
+  setTimeout(() => document.getElementById('hero-card').classList.add('revealed'), 400);
+  setTimeout(() => document.getElementById('hero-partners').classList.add('revealed'), 550);
+  setTimeout(() => document.getElementById('hero-rating').classList.add('revealed'), 650);
+  setTimeout(() => document.getElementById('hero-ctas').classList.add('revealed'), 750);
+  setTimeout(() => document.getElementById('hero-status').style.opacity = '1', 900);
+  
+  // Start observing regular scroll reveals
+  document.querySelectorAll('[data-reveal], #portfolio-h2, #services-h2, #stats-h2, #footer-h2, #about-statement').forEach(el => {
+    revealObserver.observe(el);
+  });
+}
+
+// Carousel
+const carouselItems = [
+  {caption:"Conversion design", title:"Crafted to convert."},
+  {caption:"Engineering", title:"Built to scale."},
+  {caption:"Brand systems", title:"Designed to last."}
+];
+let activeCarouselIdx = 0;
+const carouselSlot = document.getElementById('carousel-slot');
+const carouselDots = document.getElementById('carousel-dots').children;
+
+function renderCarousel(dir = 0) {
+  const item = carouselItems[activeCarouselIdx];
+  const div = document.createElement('div');
+  div.style.position = 'absolute';
+  div.style.inset = '0';
+  div.style.display = 'flex';
+  div.style.flexDirection = 'column';
+  div.style.transition = 'all 0.6s cubic-bezier(.22,1,.36,1)';
+  
+  if (dir > 0) {
+    div.style.transform = 'translateY(14px)'; div.style.opacity = '0';
+  } else if (dir < 0) {
+    div.style.transform = 'translateY(-14px)'; div.style.opacity = '0';
+  }
+  
+  div.innerHTML = `
+    <div style="font-size:0.65rem; font-weight:500; text-transform:uppercase; letter-spacing:0.05em; color:rgba(17,17,17,.45);">${item.caption}</div>
+    <div style="max-width:8rem; font-size:0.875rem; font-weight:500; line-height:1.35; margin-top:auto;">${item.title}</div>
+  `;
+  
+  const current = carouselSlot.firstElementChild;
+  if (current) {
+    current.style.transform = dir > 0 ? 'translateY(-14px)' : 'translateY(14px)';
+    current.style.opacity = '0';
+    setTimeout(() => current.remove(), 600);
+  }
+  
+  carouselSlot.appendChild(div);
+  // force reflow
+  div.offsetHeight;
+  div.style.transform = 'translateY(0)';
+  div.style.opacity = '1';
+  
+  for(let i=0; i<3; i++) {
+    carouselDots[i].style.width = i === activeCarouselIdx ? '1rem' : '0.375rem';
+    carouselDots[i].style.background = i === activeCarouselIdx ? 'rgba(17,17,17,.7)' : 'rgba(17,17,17,.2)';
+  }
+}
+renderCarousel(0);
+
+window.nextCarousel = (e) => { e.stopPropagation(); activeCarouselIdx = (activeCarouselIdx + 1) % 3; renderCarousel(1); };
+window.prevCarousel = (e) => { e.stopPropagation(); activeCarouselIdx = (activeCarouselIdx + 2) % 3; renderCarousel(-1); };
+
+// Stats Count Up
+const statNums = document.querySelectorAll('.stat-num');
+lenis.on('scroll', () => {
+  if(!isReady) return;
+  const vh = window.innerHeight;
+  const center = vh / 2;
+  
+  statNums.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    const elTop = rect.top;
+    // start: top bottom (element top hits viewport bottom) -> elTop = vh
+    // end: center center (element center hits viewport center) -> elTop + height/2 = center
+    const elCenter = elTop + rect.height/2;
+    
+    let progress = 0;
+    if(elTop > vh) { progress = 0; }
+    else if(elCenter < center) { progress = 1; }
+    else {
+      const totalDist = vh - (center - rect.height/2);
+      const currentDist = vh - elTop;
+      progress = Math.max(0, Math.min(1, currentDist / totalDist));
+    }
+    
+    const target = parseInt(el.getAttribute('data-target'), 10);
+    el.textContent = Math.round(progress * target);
+  });
+});
+
+// Liquid Reveal Canvas
+const canvas = document.getElementById('liquid-canvas');
+const ctx = canvas.getContext('2d');
+const container = document.querySelector('.liquid-reveal');
+
+const afterImg = new Image();
+afterImg.crossOrigin = "anonymous";
+afterImg.src = "https://api.getlayers.ai/storage/v1/object/public/public/assets/lumora-e8b711fc68/hero/before.jpg";
+
+let coverCanvas = document.createElement('canvas');
+let coverCtx = coverCanvas.getContext('2d');
+let brushCanvas = document.createElement('canvas');
+let brushCtx = brushCanvas.getContext('2d');
+
+let dpr = Math.min(window.devicePixelRatio || 1, 2);
+let cw = 0, ch = 0;
+let brushRadius = 143;
+const decay = 0.016;
+
+let points = [];
+let idle = 0;
+let drawing = false;
+
+function resizeCanvas() {
+  const rect = container.getBoundingClientRect();
+  cw = rect.width; ch = rect.height;
+  canvas.width = cw * dpr; canvas.height = ch * dpr;
+  coverCanvas.width = cw * dpr; coverCanvas.height = ch * dpr;
+  
+  if (afterImg.complete) drawCover();
+  
+  const r = brushRadius * dpr;
+  const diam = Math.ceil(r * 2);
+  brushCanvas.width = diam; brushCanvas.height = diam;
+}
+window.addEventListener('resize', resizeCanvas);
+afterImg.onload = resizeCanvas;
+
+function drawCover() {
+  const iw = afterImg.width, ih = afterImg.height;
+  const rCover = (cw*dpr) / (ch*dpr);
+  const rImg = iw / ih;
+  let dw = cw*dpr, dh = ch*dpr, dx = 0, dy = 0;
+  if(rCover > rImg) { dh = dw / rImg; dy = ((ch*dpr) - dh)/2; }
+  else { dw = dh * rImg; dx = ((cw*dpr) - dw)/2; }
+  coverCtx.clearRect(0,0,coverCanvas.width,coverCanvas.height);
+  coverCtx.drawImage(afterImg, dx, dy, dw, dh);
+}
+
+let lastPoint = null;
+window.addEventListener('pointermove', (e) => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const rect = container.getBoundingClientRect();
+  const x = (e.clientX - rect.left) * dpr;
+  const y = (e.clientY - rect.top) * dpr;
+  const r = brushRadius * dpr;
+  
+  if(x < -r || x > (cw*dpr)+r || y < -r || y > (ch*dpr)+r) {
+    lastPoint = null; return;
+  }
+  
+  drawing = true; idle = 0;
+  if(!lastPoint) { points.push({x,y}); }
+  else {
+    const dx = x - lastPoint.x, dy = y - lastPoint.y;
+    const dist = Math.hypot(dx, dy);
+    const step = Math.max(r * 0.3, 1);
+    const n = Math.min(Math.ceil(dist / step), 60);
+    for(let i=1; i<=n; i++) {
+      points.push({ x: lastPoint.x + dx*(i/n), y: lastPoint.y + dy*(i/n) });
+    }
+  }
+  lastPoint = {x,y};
+});
+
+function drawLiquid() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return requestAnimationFrame(drawLiquid);
+  
+  if (points.length === 0) {
+    idle++;
+    if(idle > 120) {
+      ctx.clearRect(0,0, canvas.width, canvas.height);
+      drawing = false;
+      return requestAnimationFrame(drawLiquid);
+    }
+  }
+  
+  let fade = drawing ? decay : Math.min(decay + idle*0.004, 0.5);
+  ctx.globalCompositeOperation = 'destination-out';
+  ctx.fillStyle = `rgba(0,0,0,${fade})`;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  
+  if (points.length > 0) {
+    const r = brushRadius * dpr;
+    const diam = Math.ceil(r * 2);
+    
+    ctx.globalCompositeOperation = 'source-over';
+    
+    points.forEach(p => {
+      brushCtx.clearRect(0,0,diam,diam);
+      brushCtx.globalCompositeOperation = 'source-over';
+      const grad = brushCtx.createRadialGradient(r,r,0, r,r,r);
+      grad.addColorStop(0, 'rgba(255,255,255,1)');
+      grad.addColorStop(0.55, 'rgba(255,255,255,0.82)');
+      grad.addColorStop(1, 'rgba(255,255,255,0)');
+      brushCtx.fillStyle = grad;
+      brushCtx.fillRect(0,0,diam,diam);
+      
+      brushCtx.globalCompositeOperation = 'source-in';
+      brushCtx.drawImage(coverCanvas, p.x-r, p.y-r, diam, diam, 0, 0, diam, diam);
+      
+      ctx.drawImage(brushCanvas, p.x-r, p.y-r);
+    });
+    points = [];
+  }
+  drawing = false;
+  requestAnimationFrame(drawLiquid);
+}
+requestAnimationFrame(drawLiquid);
+
+
+// NavMenu Overlay
+const navMenu = document.getElementById('nav-menu');
+window.openNavMenu = () => { stopScroll(); navMenu.classList.add('open'); };
+window.closeNavMenu = () => { startScroll(); navMenu.classList.remove('open'); };
+window.navTo = (id) => { closeNavMenu(); setTimeout(() => smoothScrollTo(id), 600); };
+window.navToContact = () => { closeNavMenu(); setTimeout(openRequestModal, 600); };
+
+// Request Modal
+const reqModal = document.getElementById('request-modal-backdrop');
+const formView = document.getElementById('modal-form-view');
+const successView = document.getElementById('modal-success-view');
+
+window.openRequestModal = () => { stopScroll(); reqModal.classList.add('open'); reqModal.classList.remove('closing'); };
+window.closeRequestModal = () => {
+  reqModal.classList.add('closing');
+  setTimeout(() => {
+    reqModal.classList.remove('open');
+    reqModal.classList.remove('closing');
+    startScroll();
+    setTimeout(() => {
+      formView.style.display = 'block';
+      successView.style.display = 'none';
+      formView.querySelector('form').reset();
+      document.getElementById('modal-submit-txt').textContent = "Send request";
+    }, 300);
+  }, 600);
+};
+
+window.submitForm = (e) => {
+  e.preventDefault();
+  const btnTxt = document.getElementById('modal-submit-txt');
+  btnTxt.textContent = "Sending...";
+  setTimeout(() => {
+    formView.style.display = 'none';
+    successView.style.display = 'flex';
+  }, 600);
+};
+
+window.addEventListener('keydown', e => {
+  if(e.key === 'Escape') {
+    if(reqModal.classList.contains('open')) closeRequestModal();
+    else if(navMenu.classList.contains('open')) closeNavMenu();
+  }
+});
+</script>
+</body>
+</html>
