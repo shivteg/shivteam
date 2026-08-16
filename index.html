@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Lumora — Independent Design & Engineering Studio</title>
-<meta name="description" content="Lumora is an independent studio crafting brands, products, and the systems that connect them — bold ideas, shipped with quiet precision." />
+<title>Shivteam — Independent Design & Engineering Studio</title>
+<meta name="description" content="Shivteam is an independent studio crafting brands, products, and the systems that connect them — bold ideas, shipped with quiet precision." />
 <meta name="theme-color" content="#0a0a0a" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -210,7 +210,7 @@ img{ display:block }
       <svg viewBox="0 0 48 48" style="width:1.875rem; height:1.875rem; fill:#cf8047;">
         <path d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/>
       </svg>
-      <span style="font-size: clamp(1.5rem, 3vw, 1.875rem);">Lumora</span>
+      <span style="font-size: clamp(1.5rem, 3vw, 1.875rem);">Shivteam</span>
     </div>
     <p style="max-width:24ch; font-size:0.875rem; color:rgba(255,255,255,.55); text-align:center;">Bold ideas, shipped with quiet precision.</p>
   </div>
@@ -233,7 +233,7 @@ img{ display:block }
       <svg viewBox="0 0 48 48" style="width:1.25rem; height:1.25rem; fill:var(--accent);">
         <path d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/>
       </svg>
-      Lumora
+      Shivteam
     </button>
     <!-- Primary Nav (lg+) -->
     <ul style="display:none; gap:2rem; font-size:0.875rem; font-weight:500;" class="nav-links-lg">
@@ -244,6 +244,7 @@ img{ display:block }
           Services <span style="font-size:0.75rem; opacity:0.6;">▾</span>
         </button>
       </li>
+      <li><button class="hover-lift" onclick="smoothScrollTo('team')">Team</button></li>
       <li><button class="hover-lift" onclick="smoothScrollTo('about')">Studio</button></li>
       <li><button class="hover-lift" onclick="smoothScrollTo('careers')">Careers</button></li>
       <li><button class="hover-lift" onclick="openRequestModal()">Contact</button></li>
@@ -281,14 +282,14 @@ img{ display:block }
   <section id="home" style="position:relative; isolation:isolate; overflow:hidden; border-radius:0 0 2rem 2rem; background:var(--hero-to);">
     <!-- LiquidReveal -->
     <div class="liquid-reveal">
-      <img src="https://api.getlayers.ai/storage/v1/object/public/public/assets/lumora-e8b711fc68/hero/after.jpg" style="object-fit:cover; position:absolute; inset:0; width:100%; height:100%;" alt="" />
+      <img src="shivteg.jpeg" style="object-fit:cover; position:absolute; inset:0; width:100%; height:100%;" alt="" />
       <canvas id="liquid-canvas" aria-hidden="true"></canvas>
     </div>
     <!-- Legibility vignette -->
     <div style="position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(to bottom, rgba(255,255,255,.35), transparent, rgba(255,255,255,.35));"></div>
     
     <!-- Watermark -->
-    <div id="hero-watermark" style="pointer-events:none; position:absolute; inset-inline:0; bottom:7rem; z-index:1; text-align:center; user-select:none; font-weight:700; line-height:1; font-size:var(--text-watermark); color:rgba(255,255,255,.4); opacity:0; transform:translateY(20px); transition:all 0.7s cubic-bezier(.22,1,.36,1);">LUMORA</div>
+    <div id="hero-watermark" style="pointer-events:none; position:absolute; inset-inline:0; bottom:7rem; z-index:1; text-align:center; user-select:none; font-weight:700; line-height:1; font-size:var(--text-watermark); color:rgba(255,255,255,.4); opacity:0; transform:translateY(20px); transition:all 0.7s cubic-bezier(.22,1,.36,1);">SHIVTEAM</div>
 
     <!-- Content grid -->
     <div class="shell hero-grid" style="position:relative; z-index:20; display:flex; flex-direction:column; gap:2rem; padding:7rem 1.25rem 5rem;">
@@ -415,6 +416,33 @@ img{ display:block }
 </style>
 
   <!-- 3) About -->
+  
+  <!-- Team Section -->
+  <section id="team" style="background:#fff;">
+    <div class="shell" style="padding-block:5rem; display:grid; grid-template-columns:1fr; gap:3rem; align-items:center;">
+      <div style="display:flex; justify-content:center;">
+        <img src="shivteg.jpeg" style="width:100%; max-width:400px; border-radius:2rem; object-fit:cover; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);" alt="Shivteg Singh" />
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:flex-start;">
+        <h2 style="font-size:clamp(2.25rem, 5vw, 3rem); font-weight:600; letter-spacing:-0.02em;">CEO Shivteg Singh</h2>
+        <p style="margin-top:1rem; font-size:1.125rem; color:rgba(17,17,17,.7);">Finding more people to join.</p>
+        <button class="pill-btn dark with-arrow" style="margin-top:2rem;" onclick="openRequestModal()">
+          <span class="hover-scale pill-btn-inner">
+            To join contact me
+            <span class="pill-badge arrow-right">
+              <svg viewBox="0 0 24 24" style="width:1rem; height:1rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </section>
+  <style>
+  @media (min-width:768px) {
+    #team .shell { grid-template-columns:1fr 1fr; }
+  }
+  </style>
+
   <section id="about" style="background:#fff;">
     <div class="shell about-grid" style="display:grid; grid-template-columns:1fr; align-items:center; gap:3rem; padding-block:5rem;">
       <!-- Left -->
@@ -786,7 +814,7 @@ img{ display:block }
       <div>
         <div style="display:flex; align-items:center; gap:0.5rem; font-size:1.125rem; font-weight:600; margin-bottom:1rem;">
           <svg viewBox="0 0 48 48" style="width:1.25rem; height:1.25rem; fill:currentColor;"><path d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/></svg>
-          Lumora
+          Shivteam
         </div>
         <p style="max-width:20rem; font-size:0.875rem; color:rgba(255,255,255,.55);">An independent studio crafting brands, products, and the systems that connect them.</p>
       </div>
@@ -823,7 +851,7 @@ img{ display:block }
     </div>
     <!-- Legal -->
     <div class="footer-legal" style="display:flex; flex-direction:column; align-items:center; justify-content:space-between; gap:1rem; border-top:1px solid rgba(255,255,255,.1); padding-top:2rem; font-size:0.75rem; color:rgba(255,255,255,.45);">
-      <div>© 2025 Lumora Studio. All rights reserved.</div>
+      <div>© 2025 Shivteam Studio. All rights reserved.</div>
       <div style="display:flex; gap:1.5rem;">
         <a href="#privacy" class="anim-link-sm">Privacy</a>
         <a href="#terms" class="anim-link-sm">Terms</a>
@@ -831,7 +859,7 @@ img{ display:block }
     </div>
   </div>
   <!-- Watermark -->
-  <div style="position:absolute; inset-inline:0; bottom:-1.5rem; z-index:0; text-align:center; pointer-events:none; user-select:none; font-weight:700; line-height:1; font-size:var(--text-watermark); color:rgba(255,255,255,.05);">LUMORA</div>
+  <div style="position:absolute; inset-inline:0; bottom:-1.5rem; z-index:0; text-align:center; pointer-events:none; user-select:none; font-weight:700; line-height:1; font-size:var(--text-watermark); color:rgba(255,255,255,.05);">SHIVTEAM</div>
 </footer>
 <style>
 @media (min-width:640px) {
@@ -853,7 +881,7 @@ img{ display:block }
   <div class="shell" style="width:100%; display:flex; align-items:center; justify-content:space-between; padding-block:1.25rem;">
     <div style="font-size:1.125rem; font-weight:600; display:flex; align-items:center; gap:0.5rem;">
       <svg viewBox="0 0 48 48" style="width:1.25rem; height:1.25rem; fill:#cf8047;"><path d="M24 2c2.2 13.8 7.9 19.6 22 22-14.1 2.4-19.8 8.2-22 22-2.2-13.8-7.9-19.6-22-22 14.1-2.4 19.8-8.2 22-22Z"/></svg>
-      Lumora
+      Shivteam
     </div>
     <button onclick="closeNavMenu()" class="hover-scale-105" style="display:inline-flex; align-items:center; gap:0.5rem; border:1px solid rgba(255,255,255,.15); border-radius:0.875rem; padding:0.5rem 1rem; font-size:0.75rem; font-weight:500; text-transform:uppercase; letter-spacing:0.05em; color:rgba(255,255,255,.7); transition:all .3s;">
       <svg viewBox="0 0 24 24" style="width:0.875rem; height:0.875rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M4 4l16 16M20 4 4 20"/></svg>
@@ -866,6 +894,7 @@ img{ display:block }
       <li class="nav-item" style="transition-delay:80ms;"><button class="nav-btn" onclick="navTo('home')"><span class="nav-idx">01</span><span class="nav-lbl">Home</span></button></li>
       <li class="nav-item" style="transition-delay:125ms;"><button class="nav-btn" onclick="navTo('works')"><span class="nav-idx">02</span><span class="nav-lbl">Work</span></button></li>
       <li class="nav-item" style="transition-delay:170ms;"><button class="nav-btn" onclick="navTo('services')"><span class="nav-idx">03</span><span class="nav-lbl">Services</span></button></li>
+      <li class="nav-item" style="transition-delay:190ms;"><button class="nav-btn" onclick="navTo('team')"><span class="nav-idx">Team</span><span class="nav-lbl">Team</span></button></li>
       <li class="nav-item" style="transition-delay:215ms;"><button class="nav-btn" onclick="navTo('about')"><span class="nav-idx">04</span><span class="nav-lbl">Studio</span></button></li>
       <li class="nav-item" style="transition-delay:260ms;"><button class="nav-btn" onclick="navTo('careers')"><span class="nav-idx">05</span><span class="nav-lbl">Careers</span></button></li>
       <li class="nav-item" style="transition-delay:305ms;"><button class="nav-btn" onclick="navToContact()"><span class="nav-idx">06</span><span class="nav-lbl">Contact</span></button></li>
@@ -900,37 +929,13 @@ img{ display:block }
       <svg viewBox="0 0 24 24" style="width:1rem; height:1rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M4 4l16 16M20 4 4 20"/></svg>
     </button>
     <!-- Form View -->
-    <div id="modal-form-view">
-      <div style="margin-bottom:1.5rem; display:flex; flex-direction:column; gap:0.375rem;">
-        <div class="eyebrow dark"><div class="dot" style="background:var(--accent);"></div> Start a project</div>
-        <h2 style="font-size:clamp(1.5rem, 3.5vw, 1.875rem); font-weight:600; letter-spacing:-0.01em;">Tell us what you're building.</h2>
-      </div>
-      <form onsubmit="submitForm(event)" style="display:flex; flex-direction:column; gap:1rem;">
-        <label style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.75rem; font-weight:500; text-transform:uppercase; letter-spacing:0.025em; color:rgba(17,17,17,.5);">
-          Name
-          <input type="text" required placeholder="Your name" class="modal-input" />
-        </label>
-        <label style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.75rem; font-weight:500; text-transform:uppercase; letter-spacing:0.025em; color:rgba(17,17,17,.5);">
-          Email
-          <input type="email" required placeholder="you@company.com" class="modal-input" />
-        </label>
-        <label style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.75rem; font-weight:500; text-transform:uppercase; letter-spacing:0.025em; color:rgba(17,17,17,.5);">
-          Project
-          <textarea required rows="4" style="resize:none;" placeholder="A few words about your project, timeline, and budget." class="modal-input"></textarea>
-        </label>
-        <div style="margin-top:0.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem;">
-          <div style="font-size:0.75rem; color:rgba(17,17,17,.45);">We reply within one business day.</div>
-          <button type="submit" class="pill-btn dark with-arrow" id="modal-submit-btn">
-            <span class="hover-scale pill-btn-inner">
-              <span id="modal-submit-txt">Send request</span>
-              <span class="pill-badge arrow-up-right">
-                <svg viewBox="0 0 24 24" style="width:1rem; height:1rem; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;"><path d="M7 17 17 7M8 7h9v9"/></svg>
-              </span>
-            </span>
-          </button>
-        </div>
-      </form>
+    
+    <!-- Custom Contact View -->
+    <div id="modal-form-view" style="text-align:center; padding-block:3rem; display:flex; flex-direction:column; align-items:center; gap:1.5rem;">
+      <h2 style="font-size:clamp(1.5rem, 3.5vw, 2rem); font-weight:600; letter-spacing:-0.01em;">Drop email to me on</h2>
+      <a href="mailto:tegg606@gmail.com" class="hover-scale" style="display:inline-block; font-size:clamp(1.25rem, 3vw, 1.5rem); font-weight:600; color:#b15f2c; background:rgba(177,95,44,0.1); padding:0.75rem 1.5rem; border-radius:1rem;">tegg606@gmail.com</a>
     </div>
+
     <!-- Success View -->
     <div id="modal-success-view" style="display:none; flex-direction:column; align-items:center; text-align:center; padding-block:2rem; gap:1rem;">
       <div style="width:3.5rem; height:3.5rem; display:grid; place-items:center; border-radius:9999px; background:var(--ink); color:var(--accent-from); font-size:1.5rem;">
@@ -1249,7 +1254,7 @@ const container = document.querySelector('.liquid-reveal');
 
 const afterImg = new Image();
 afterImg.crossOrigin = "anonymous";
-afterImg.src = "https://api.getlayers.ai/storage/v1/object/public/public/assets/lumora-e8b711fc68/hero/before.jpg";
+afterImg.src = "https://api.getlayers.ai/storage/v1/object/public/public/assets/shivteam-e8b711fc68/hero/before.jpg";
 
 let coverCanvas = document.createElement('canvas');
 let coverCtx = coverCanvas.getContext('2d');
