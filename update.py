@@ -64,7 +64,7 @@ new_modal_content = """
     <!-- Custom Contact View -->
     <div id="modal-form-view" style="text-align:center; padding-block:3rem; display:flex; flex-direction:column; align-items:center; gap:1.5rem;">
       <h2 style="font-size:clamp(1.5rem, 3.5vw, 2rem); font-weight:600; letter-spacing:-0.01em;">Drop email to me on</h2>
-      <a href="mailto:tegg606@gmail.com" class="hover-scale" style="display:inline-block; font-size:clamp(1.25rem, 3vw, 1.5rem); font-weight:600; color:#b15f2c; background:rgba(177,95,44,0.1); padding:0.75rem 1.5rem; border-radius:1rem;">tegg606@gmail.com</a>
+      <a href="mailto:official@shivtge.com" class="hover-scale" style="display:inline-block; font-size:clamp(1.25rem, 3vw, 1.5rem); font-weight:600; color:#b15f2c; background:rgba(177,95,44,0.1); padding:0.75rem 1.5rem; border-radius:1rem;">official@shivtge.com</a>
     </div>
 """
 # We'll use regex to replace the entire <div id="modal-form-view">...</div> block
